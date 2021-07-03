@@ -1,0 +1,15 @@
+$LANG_ESP:
+  - en: Spanish
+  - es: Español
+$LANG_FR:
+  - en: French
+  - es: Francés
+$LANG_LVL_NATIVE:
+  - en: Native
+  - es: Nativo
+$LANG_LVL_ADV:
+  - en: Advanced
+  - es: Avanzado
+$LANG_LVL_INTERM:
+  - en: Intermediate
+  - es: Intermedio

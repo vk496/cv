@@ -1,0 +1,101 @@
+name: Valentín
+surname: KIVACHUK BURDÁ
+contact:
+  - link: cv@vk496.es
+    logo: ####
+  - link: https://vk496.es
+    logo: ####
+  - link: https://github.com/vk496
+    logo: ####
+languages:
+  - lang: $LANG_ESP
+    level: $LANG_LVL_NATIVE
+  - lang: Russian
+    level: $LANG_LVL_NATIVE
+  - lang: English
+    level: $LANG_LVL_ADV
+  - lang: $LANG_FR
+    level: $LANG_LVL_INTERM
+education:
+  - name: Computer Science Bachelor's Degree
+    description: >-
+      4 years Bachelor's Degree in Computer Science with
+      specialization in Network Architectures
+    start: 2014-09-01
+    stop: 2018-09-01
+    location:
+      name: University of Murcia
+      city: Toulouse, Spain
+      url: https://www.um.es/web/informatica/inicio
+      lat: 38.0228266
+      lon: -1.1754108
+    tags:
+      - C
+      - C++
+      - Java
+      - SDN
+  - name: Erasmus Internship
+    description: >-
+      Developing of tools for automatization of internal data
+      recollection and processing
+    start: 2018-02-01
+    stop: 2018-08-01
+    location:
+      name: NXP Semiconductors
+      city: Toulouse, France
+      url: https://www.nxp.com/company/about-nxp/worldwide-locations/france:FRANCE
+      lat: 43.5620633
+      lon: 1.39105
+    tags:
+      - J2EE
+      - Excel
+skills:
+  - C:
+      logo: https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg
+  - C++:
+      logo: https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg
+  - Java:
+  - Python:
+  - LaTeX:
+  - SQL:
+  - Go:
+  - CSS:
+  - HTML:
+  - SDN:
+  - VLAN:
+  - Linux:
+  - Android:
+  - Maven:
+      related:
+        - Java
+  - Git:
+  - Docker:
+  - QEMU:
+  - Radare2:
+  - GDB:
+  - Bash:
+  - Radius:
+  - Asterisk:
+  - LDAP:
+  - x509v3:
+  - SNMP:
+  - OpenWrt:
+  - Arduino:
+      related:
+        - Tasmota
+  - Tasmota:
+  - Redis:
+  - API REST:
+  - Excel:
+  - Macros:
+  - AI:
+  - Cisco:
+  - IPv4:
+      related:
+        - SDN
+        - Cisco
+  - IPv6:
+      related:
+        - SDN
+        - Cisco
+  - P2P:
