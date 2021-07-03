@@ -16,7 +16,7 @@ languages:
     level: $LANG_LVL_ADV
   - lang: $LANG_FR
     level: $LANG_LVL_INTERM
-education:
+education_experience:
   - name: Computer Science Bachelor's Degree
     description: >-
       4 years Bachelor's Degree in Computer Science with
@@ -49,19 +49,122 @@ education:
     tags:
       - J2EE
       - Excel
+  - name: IRT Saint Exupery
+    start: 2019-09-01
+projects:
+  - name: AEDNavigator
+    start: 2015-09-01
+    stop: 2015-12-01
+    description: >-
+      Designed and developed in C++ an application that finds
+      the optimal road between multiple paths, implementing our
+      own hash algorithms and data structures.
+    tags:
+      - C++
+  - name: NanoP2P
+    start: 2016-02-01
+    stop: 2016-06-01
+    description: >-
+      Designed and implemented a P2P protocol in Java for
+      file sharing with multithreads mechanisms.
+    tags:
+      - Java
+      - P2P
+  - name: PseudoP
+    start: 2016-02-01
+    stop: 2016-06-01
+    description: >-
+      Designed and implemented a compiler of a simple version
+      of Pascal with Flex and Bison
+    tags:
+      - C
+      - Flex
+      - Bison
+  - name: Topologies
+    start: 2016-09-01
+    stop: 2016-12-01
+    description: >-
+      Networks inspection and configuration with different
+      kind of protocols (RIP, OSPF, ...)
+    tags:
+      - Cisco
+      - RIP
+      - OSPF
+      - IPv4
+      - IPv6
+  - name: Sudoku Solver
+    start: 2016-09-01
+    stop: 2016-12-01
+    description: >-
+      Implementation of a genetic algorithc
+      to solve sudoku problems.
+    tags:
+      - AI
+      - C++
+  - name: Instant messaging app
+    start: 2017-02-01
+    stop: 2017-05-01
+    description: >-
+      Android instant messaging app development
+      based on matrix.org API REST
+    tags:
+      - Java
+      - Android
+      - API
+  - name: LEGO
+    start: 2017-09-01
+    stop: 2018-05-01
+    url: https://github.com/vk496/lego
+    description: >-
+      Deployment of two macro organizations with their own
+      services through Docker
+    tags:
+      - WPA
+      - Radius
+      - LDAP
+      - VoIP
+      - PKI
+      - OAuth
+      - Firewall
+      - x509v3
+      - Docker
+  - name: ONOS-ipsec
+    start: 2018-02-01
+    stop: 2018-09-01
+    url:
+      - https://digitum.um.es/digitum/bitstream/10201/61119/1/TFG_Infor.pdf
+      - https://datatracker.ietf.org/doc/html/draft-ietf-i2nsf-sdn-ipsec-flow-protection-02
+    description: >-
+      Research and development of automatic managment IPsec
+      security asociations by ONOS, based on a IETF I2NSF draft.
+    tags:
+      - ONOS
+      - SDN
 skills:
   - C:
       logo: https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg
+      related:
+        - Flex
+        - Bison
   - C++:
       logo: https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg
   - Java:
   - Python:
   - LaTeX:
   - SQL:
+  - Flex:
+  - ONOS:
+  - Bison:
+  - VoIP:
+      related:
+        - Asterisk
   - Go:
   - CSS:
   - HTML:
+  - WPA:
   - SDN:
+      related:
+        - ONOS
   - VLAN:
   - Linux:
   - Android:
@@ -76,6 +179,9 @@ skills:
   - Bash:
   - Radius:
   - Asterisk:
+  - RIP:
+  - OSPF:
+  - IPsec:
   - LDAP:
   - x509v3:
   - SNMP:
