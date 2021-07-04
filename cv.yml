@@ -17,14 +17,14 @@ languages:
   - lang: $LANG_FR
     level: $LANG_LVL_INTERM
 education_experience:
-  - name: Computer Science Bachelor's Degree
+  - name: University of Murcia
+    id: um
     description: >-
       4 years Bachelor's Degree in Computer Science with
       specialization in Network Architectures
     start: 2014-09-01
     stop: 2018-09-01
     location:
-      name: University of Murcia
       city: Toulouse, Spain
       url: https://www.um.es/web/informatica/inicio
       lat: 38.0228266
@@ -34,14 +34,14 @@ education_experience:
       - C++
       - Java
       - SDN
-  - name: Erasmus Internship
+  - name: NXP Semiconductors
+    id: nxp
     description: >-
-      Developing of tools for automatization of internal data
+      Erasmus Internship for developing of tools for automatization of internal data
       recollection and processing
     start: 2018-02-01
     stop: 2018-08-01
     location:
-      name: NXP Semiconductors
       city: Toulouse, France
       url: https://www.nxp.com/company/about-nxp/worldwide-locations/france:FRANCE
       lat: 43.5620633
@@ -49,10 +49,25 @@ education_experience:
     tags:
       - J2EE
       - Excel
+      - Java
+  - name: Open Source contributor
+    id: open
+    description: >-
+      Contributor and developer of different Open Source projects
+    start: 2014-01-01
   - name: IRT Saint Exupery
+    id: irt
     start: 2019-09-01
+    description: >-
+      Multidisciplinary computer science engineer
+    location:
+      city: Toulouse, France
+      url: https://www.irt-saintexupery.com/
+      lat: 43.5634244
+      lon: 1.486353
 projects:
   - name: AEDNavigator
+    where: um
     start: 2015-09-01
     stop: 2015-12-01
     description: >-
@@ -71,6 +86,7 @@ projects:
       - Java
       - P2P
   - name: PseudoP
+    where: um
     start: 2016-02-01
     stop: 2016-06-01
     description: >-
@@ -81,6 +97,7 @@ projects:
       - Flex
       - Bison
   - name: Topologies
+    where: um
     start: 2016-09-01
     stop: 2016-12-01
     description: >-
@@ -93,6 +110,7 @@ projects:
       - IPv4
       - IPv6
   - name: Sudoku Solver
+    where: um
     start: 2016-09-01
     stop: 2016-12-01
     description: >-
@@ -102,6 +120,7 @@ projects:
       - AI
       - C++
   - name: Instant messaging app
+    where: um
     start: 2017-02-01
     stop: 2017-05-01
     description: >-
@@ -112,6 +131,7 @@ projects:
       - Android
       - API
   - name: LEGO
+    where: um
     start: 2017-09-01
     stop: 2018-05-01
     url: https://github.com/vk496/lego
@@ -129,6 +149,7 @@ projects:
       - x509v3
       - Docker
   - name: ONOS-ipsec
+    where: um
     start: 2018-02-01
     stop: 2018-09-01
     url:
@@ -140,6 +161,51 @@ projects:
     tags:
       - ONOS
       - SDN
+  - name: LINSET
+    where: open
+    description: Social Engineering tool for audit WPA/2 wireless networks.
+    start: 2013-11-06
+    stop: 2014-06-16
+    url:
+      - https://foro.seguridadwireless.net/aplicaciones-y-diccionarios-linux/linset-0-14-wpa2-hack-sin-fuerza-bruta/
+      - https://github.com/vk496/linset
+    tags:
+      - Bash
+      - WPA
+      - Security
+      - Linux
+  - name: UEFI bootloader
+    where: open
+    description: Support UEFI boot in Wifislax distro
+    start: 2015-05-01
+    stop: 2016-02-01
+    url:
+      - https://foro.seguridadwireless.net/colaboracion-y-desarrollo-de-nuestras-lives/(poc)-uefi-en-wifislax/
+    tags:
+      - Linux
+      - UEFI
+  - name: Telegram MIPS support
+    where: open
+    description: Initial telegram-cli support for Big endian architectures.
+    start: 2017-08-01
+    stop: 2017-09-05
+    url:
+      - https://github.com/vk496/tgl/tree/endian
+    tags:
+      - C
+      - API
+      - Embedded
+      - GDB
+  - name: OpenWrt Developer
+    where: open
+    description: OpenWrt developer and contributor
+    start: 2015-01-01
+    url:
+      - https://forum.openwrt.org/t/support-for-strong-1200
+      - https://t.me/openwrt_es
+    tags:
+      - C
+      - Linux
 skills:
   - C:
       logo: https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg
