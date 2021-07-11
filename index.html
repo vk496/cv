@@ -15,6 +15,65 @@
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"
         integrity="sha256-Rdw90D3AegZwWiwpibjH9wkBPwS9U4bjJ51ORH8H69c=" crossorigin="anonymous"></script>
     <script>
+        function consumeSkills() {
+            let base_skill = document.getElementById('template_skill')
+            let parent_skill = document.getElementById('parent_skill');
+            oYAML.skills.forEach(function (item) {
+                // Object.keys(item)[0]
+                var clone2 = document.importNode(base_skill.content, true);
+                clone2.children[0].textContent = Object.keys(item)[0];
+                parent_skill.insertBefore(clone2, base_skill);
+            });
+        }
+
+        function consumeExperience() {
+            let base_experience = document.getElementById('template_experience');
+            let parent_experience = document.getElementById('parent_experience');
+            oYAML.education_experience.forEach(function (item) {
+                var clone2 = document.importNode(base_experience.content, true);
+                // Year
+                startDate = (new Date(item.start))
+                stopDate = (new Date((item.stop ? item.stop : Date.now())))
+                clone2.querySelector(".cv-year").textContent = startDate.getFullYear() + " - " + stopDate.getFullYear()
+
+                // Name
+                clone2.querySelector(".cv-name").textContent = item.name
+
+                // Description
+                clone2.querySelector(".cv-description").textContent = item.description
+
+                // Location
+                if (item.location) {
+                    clone2.querySelector(".cv-location").textContent = item.location.city
+                }
+
+                // Insert
+                parent_experience.insertBefore(clone2, base_experience);
+            });
+        }
+
+        function consumeProjects() {
+            let base_projects = document.getElementById('template_projects');
+            let parent_projects = document.getElementById('parent_projects');
+            oYAML.projects.forEach(function (item) {
+                var clone2 = document.importNode(base_projects.content, true);
+                // Year
+                stopDate = (new Date((item.stop ? item.stop : Date.now())))
+
+                clone2.querySelector(".cv-year").textContent = stopDate.toLocaleDateString("en", { year: 'numeric', month: 'short' })
+
+                // Name
+                clone2.querySelector(".cv-name").textContent = item.name
+
+                // Description
+                clone2.querySelector(".cv-description").textContent = item.description
+
+                // Insert
+                parent_projects.insertBefore(clone2, base_projects);
+            });
+        }
+    </script>
+    <script>
         var oYAML
         // ##############
         // Start here :)
@@ -31,8 +90,13 @@
             .catch((error) => alert(error))
 
         function consumeData() {
-            document.getElementById('firstname')
-                .innerHTML = oYAML.firstname + ' ' + oYAML.lastname
+            // Init Skills array
+            consumeSkills()
+
+            consumeExperience()
+
+            consumeProjects()
+
         }
     </script>
 
@@ -40,14 +104,76 @@
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 border">
-                <div id="firstname"></div>
+            <div class="col-5 border">
+                <div class="row mb-2">
+                    <h2>Contact</h2>
+                    <div id="firstname">Valentín KIVACHUK BURDÁ</div>
+                    <div id="email">cv@vk496.es</div>
+                </div>
+                <div class="row">
+                    <h2>Languages</h2>
+                    <div>Spanish</div>
+                </div>
+                <div class="row">
+                    <h2>Skills</h2>
+                    <div id="parent_skill" class="row row-cols-auto">
+                        <template id="template_skill">
+                            <div class="col-auto">SkillsText</div>
+                        </template>
+                    </div>
+                </div>
             </div>
             <div class="col border">
-                Main data
+                <!-- Education & Experience -->
+
+                <h2>Education & Experience</h2>
+                <div id="parent_experience" class="contaienr">
+                    <template id="template_experience">
+                        <div class="row border cv-experience">
+                            <div class="col-2 border cv-year">
+                                <!-- 2014-2018 -->
+                            </div>
+                            <div class="col border cv-name">
+                                <!-- Erasmus Internship -->
+                            </div>
+                            <div class="col-3 border cv-location">
+                                <!-- NXP Semiconductors -->
+                            </div>
+                            <div class="row">
+                                <div class="col-auto offset-2 border cv-description">
+                                    <!--  -->
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+
+                <!-- Projects -->
+
+                <h2>Projects</h2>
+                <div id="parent_projects" class="container">
+                    <template id="template_projects">
+                        <div class="row border cv-projects">
+                            <div class="col-2 border cv-year">
+                                2014-2018
+                            </div>
+                            <div class="col border cv-name">
+                                Erasmus Internship
+                            </div>
+                            <!-- <div class="col-3 border cv-location">
+                                NXP Semiconductors
+                            </div> -->
+                            <div class="row">
+                                <div class="col-8 offset-2 border cv-description">
+                                    Lorem Ipsum
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
             </div>
         </div>
     </div>
