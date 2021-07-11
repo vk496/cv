@@ -206,6 +206,29 @@ projects:
     tags:
       - C
       - Linux
+  - name: Deep4Cast
+    where: irt
+    description: >-
+      Developer and technical supervisor of AI project that use
+      deep learning to post-process and produce weather forecasts
+      for several meteorological phenomena
+    start: 2019-09-01
+    stop: 2021-01-01
+    url:
+      - https://forum.openwrt.org/t/support-for-strong-1200
+      - https://www.researchgate.net/project/Deep4Cast
+    tags:
+      - Python
+      - AI
+      - Linux
+  - name: OpenCloud
+    where: irt
+    description: >-
+      Developer
+    start: 2021-01-01
+    tags:
+      - API
+      - Go
 skills:
   - C:
       logo: https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg
