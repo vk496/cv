@@ -18,10 +18,14 @@
         function consumeSkills() {
             let base_skill = document.getElementById('template_skill')
             let parent_skill = document.getElementById('parent_skill');
-            oYAML.skills.forEach(function (item) {
+            oYAML.skills.forEach(function (item, index) {
                 // Object.keys(item)[0]
                 var clone2 = document.importNode(base_skill.content, true);
-                clone2.children[0].textContent = Object.keys(item)[0];
+                // Set name
+                clone2.querySelector('label').textContent = Object.keys(item)[0];
+                // Fix reference of label to the input
+                clone2.querySelector('label').setAttribute('for', 'skill' + index)
+                clone2.querySelector('input').setAttribute('id', 'skill' + index)
                 parent_skill.insertBefore(clone2, base_skill);
             });
         }
@@ -150,9 +154,10 @@
                 </div>
                 <div class="row">
                     <h2>Skills</h2>
-                    <div id="parent_skill" class="row row-cols-auto">
+                    <div id="parent_skill" class="row row-cols-auto btn-group" role="group">
                         <template id="template_skill">
-                            <div class="col-auto">SkillsText</div>
+                            <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                            <label class="btn btn-outline-primary m-1" for="btncheck1">Checkbox 1</label>
                         </template>
                     </div>
                 </div>
