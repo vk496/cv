@@ -95,7 +95,7 @@
                     if (startDate.getFullYear() == stopDate.getFullYear()) {
                         clone2.querySelector(".cv-year").textContent = stopDate.getFullYear() + " " + stopDate.toLocaleDateString("en", { month: 'short' })
                     } else {
-                        clone2.querySelector(".cv-year").textContent = startDate.getFullYear() + " - " + (stopDate.getFullYear() || "Current")
+                        clone2.querySelector(".cv-year").textContent = startDate.getFullYear() + " - " + (stopDate.getFullYear() || "Present")
                     }
 
                     // Name
@@ -142,7 +142,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-5 border">
+            <div class="col-3 border">
                 <div class="row mb-2">
                     <h2>Contact</h2>
                     <div id="firstname">Valentín KIVACHUK BURDÁ</div>
@@ -193,21 +193,21 @@
                 <h2>Projects</h2>
                 <div id="parent_projects" class="container">
                     <template id="template_projects">
-                        <div class="row border cv-projects">
-                            <div class="col-2 border cv-year">
+                        <div class="row my-4 border cv-projects">
+                            <div class="col-auto border cv-year">
                                 2014-2018
                             </div>
-                            <div class="col border cv-name">
-                                Erasmus Internship
+                            <div class="col border">
+                                <div class="row border cv-name">
+                                    Erasmus Internship
+                                </div>
+                                <div class="row border cv-description">
+                                    Lorem Ipsum
+                                </div>
                             </div>
                             <!-- <div class="col-3 border cv-location">
                                 NXP Semiconductors
                             </div> -->
-                            <div class="row">
-                                <div class="col-8 offset-2 border cv-description">
-                                    Lorem Ipsum
-                                </div>
-                            </div>
                         </div>
                     </template>
                 </div>
