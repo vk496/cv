@@ -14,7 +14,12 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"
         integrity="sha256-Rdw90D3AegZwWiwpibjH9wkBPwS9U4bjJ51ORH8H69c=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
+
+        var oYAML // Where our YAML is stored
+
         function consumeSkills() {
             let base_skill = document.getElementById('template_skill')
             let parent_skill = document.getElementById('parent_skill');
@@ -108,32 +113,80 @@
                     parent_projects.insertBefore(clone2, base_projects);
                 });
         }
-    </script>
-    <script>
-        var oYAML
-        // ##############
-        // Start here :)
-        // ##############
-        fetch('cv.yml')
-            .then(response => {
-                if (!response.ok) throw new Error(response.status);
-                return response.text()
-            })
-            .then(data => {
-                oYAML = jsyaml.load(data)
-                consumeData();
-            })
-            .catch((error) => alert(error))
 
-        function consumeData() {
-            // Init Skills array
-            consumeSkills()
 
-            consumeExperience()
+        function FindSkills(title, highlight = true) {
+            if (!title) {
+                console.log("Title is empty")
+                return
+            }
 
-            consumeProjects()
+            otarget = oYAML.projects
+                .find(o => o.name === title)
+
+            if (!otarget) {
+                console.log("No object with name " + title)
+                return
+            }
+
+            $(".cv-skill")
+            .filter((idx,item) => otarget.tags.includes(item.innerText))
+            .toggleClass('btn-primary', highlight)
+            .toggleClass('btn-outline-primary', !highlight)
+            
 
         }
+
+        $(document).ready(function () {
+            // console.log("ready!");
+
+
+            // ##############
+            // Start here :)
+            // ##############
+            fetch('cv.yml')
+                .then(response => {
+                    if (!response.ok) throw new Error(response.status);
+                    return response.text()
+                })
+                .then(data => {
+                    oYAML = jsyaml.load(data)
+                    consumeData();
+                })
+                .catch((error) => alert(error))
+
+            function consumeData() {
+                // Init Skills array
+                consumeSkills()
+
+                consumeExperience()
+
+                consumeProjects()
+
+                $(function () {
+                    $(".cv-project").mouseenter(function () {
+                        // console.log("MOUSE IN")
+                        // $(this).css("background-color", "yellow");
+                        FindSkills(
+                            $(this).find(".cv-name").text(),
+                            true
+                        )
+                    });
+                    $(".cv-project").mouseleave(function () {
+                        // console.log("MOUSE OT")
+                        // $(this).css("background-color", "white");
+                        FindSkills(
+                            $(this).find(".cv-name").text(),
+                            false
+                        )
+                    });
+                });
+
+            }
+
+
+        });
+
     </script>
 
     <title>Hello, world!</title>
@@ -157,7 +210,7 @@
                     <div id="parent_skill" class="row row-cols-auto btn-group" role="group">
                         <template id="template_skill">
                             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                            <label class="btn btn-outline-primary m-1" for="btncheck1">Checkbox 1</label>
+                            <label class="btn btn-outline-primary m-1 cv-skill" for="btncheck1">Checkbox 1</label>
                         </template>
                     </div>
                 </div>
@@ -193,7 +246,7 @@
                 <h2>Projects</h2>
                 <div id="parent_projects" class="container">
                     <template id="template_projects">
-                        <div class="row my-4 border cv-projects">
+                        <div class="row my-4 border cv-project">
                             <div class="col-auto border cv-year">
                                 2014-2018
                             </div>

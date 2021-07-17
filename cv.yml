@@ -271,6 +271,11 @@ skills:
   - RIP:
   - OSPF:
   - IPsec:
+  - Beego:
+      related:
+        - API
+        - Go
+  - API:
   - LDAP:
   - x509v3:
   - SNMP:
