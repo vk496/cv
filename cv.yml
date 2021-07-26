@@ -231,16 +231,21 @@ projects:
       - Go
 skills:
   - C:
-      logo: https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg
+      logo: devicon-c-plain
       related:
         - Flex
         - Bison
   - C++:
-      logo: https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg
+      logo: devicon-cplusplus-line
   - Java:
+      logo: fab fa-java
   - Python:
+      logo: fab fa-python
+  - Kubernetes:
+      logo: devicon-kubernetes-plain
   - LaTeX:
   - SQL:
+      logo: fas fa-database
   - Flex:
   - ONOS:
   - Bison:
@@ -248,26 +253,36 @@ skills:
       related:
         - Asterisk
   - Go:
+      logo: devicon-go-plain
   - CSS:
+      logo: fab fa-css3
   - HTML:
+      logo: fab fa-html5
   - WPA:
+      logo: fas fa-wifi
   - SDN:
       related:
         - ONOS
   - VLAN:
   - Linux:
+      logo: fab fa-linux
   - Android:
+      logo: fab fa-android
   - Maven:
       related:
         - Java
   - Git:
+      logo: fab fa-git-alt
   - Docker:
+      logo: fab fa-docker
   - QEMU:
   - Radare2:
   - GDB:
   - Bash:
+      logo: devicon-bash-plain
   - Radius:
   - Asterisk:
+      logo: fas fa-asterisk
   - RIP:
   - OSPF:
   - IPsec:
@@ -287,6 +302,7 @@ skills:
   - Redis:
   - API REST:
   - Excel:
+      logo: fas fa-file-excel
   - Macros:
   - AI:
   - Cisco:
