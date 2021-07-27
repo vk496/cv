@@ -20,6 +20,7 @@
         integrity="sha256-Rdw90D3AegZwWiwpibjH9wkBPwS9U4bjJ51ORH8H69c=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <script>
 
         var oYAML // Where our YAML is stored
@@ -55,7 +56,24 @@
                             item.querySelector('i')
                                 .setAttribute('class', logoContent)
                             break;
+                        case logoContent.startsWith('/'):
+                            var iconname = logoContent.substring(1);
+                            (new FontFace(iconname, 'url(icons/' + iconname + '.woff)')).load().then(function (loaded_face) {
+                                // Add font to page
+                                document.fonts.add(loaded_face);
+                                document.body.style.fontFamily = iconname;
 
+                                // Inject CSS
+                                var styles = ".myicon-" + iconname + ":before { content: \"\\" + iconname + "\"; font-family: " + iconname + " !important; }"
+                                var styleSheet = document.createElement("style")
+                                styleSheet.type = "text/css"
+                                styleSheet.innerText = styles
+                                document.head.appendChild(styleSheet)
+                            })
+
+                            ic = item.querySelector('i')
+                                .setAttribute('class', 'myicon-' + iconname);
+                            break;
                         default:
                             // nothing to do
                             break;
@@ -254,7 +272,7 @@
                 <!-- Education & Experience -->
 
                 <h2>Education & Experience</h2>
-                <div id="parent_experience" class="contaienr">
+                <div id="parent_experience" class="container">
                     <template id="template_experience">
                         <div class="row border cv-experience">
                             <div class="col-2 border cv-year">

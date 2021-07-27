@@ -244,6 +244,7 @@ skills:
   - Kubernetes:
       logo: devicon-kubernetes-plain
   - LaTeX:
+      logo: /e900
   - SQL:
       logo: fas fa-database
   - Flex:
@@ -276,6 +277,7 @@ skills:
   - Docker:
       logo: fab fa-docker
   - QEMU:
+      logo: /e901
   - Radare2:
   - GDB:
   - Bash:
@@ -300,6 +302,7 @@ skills:
         - Tasmota
   - Tasmota:
   - Redis:
+      logo: devicon-redis-plain
   - API REST:
   - Excel:
       logo: fas fa-file-excel
