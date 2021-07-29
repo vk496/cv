@@ -24,6 +24,7 @@
     <script>
 
         var oYAML // Where our YAML is stored
+        var ACTIVEPROJECTS = new Set()
 
         function consumeSkills() {
             let base_skill = document.getElementById('template_skill')
@@ -40,9 +41,10 @@
                 item.querySelector('span').textContent = skillName;
                 // item.textContent = skillName;
                 // Fix reference of label to the input
-                clone2
-                    .querySelector('input')
-                    .setAttribute('id', 'skill' + index)
+                var itemInput = clone2.querySelector('input')
+
+                itemInput.setAttribute('id', 'skill' + index)
+                itemInput.setAttribute('skillcontent', skillName)
                 item.setAttribute('for', 'skill' + index)
                 item.setAttribute('skillname', skillName)
 
@@ -120,6 +122,15 @@
                 });
         }
 
+        function callbackSortProjects(a, b) {
+            // If still ongoing project, 
+            // priorize newer
+            if (!a.stop || !b.stop) {
+                return a.start < b.start
+            }
+            return a.stop < b.stop
+        }
+
         function consumeProjects() {
             let base_projects = document.getElementById('template_projects');
             let parent_projects = document.getElementById('parent_projects');
@@ -132,15 +143,8 @@
                 //     }
                 //     return elem
                 // })
-                .sort((a, b) => {
-                    // If still ongoing project, 
-                    // priorize newer
-                    if (!a.stop || !b.stop) {
-                        return a.start < b.start
-                    }
-                    return a.stop < b.stop
-                })
-                .forEach(function (item) {
+                .sort(callbackSortProjects)
+                .forEach(function (item, idx) {
                     var clone2 = document.importNode(base_projects.content, true);
                     // Year
                     stopDate = (new Date((item.stop)))
@@ -148,7 +152,7 @@
 
                     // if range is too short, just show the month
                     if (startDate.getFullYear() == stopDate.getFullYear()) {
-                        clone2.querySelector(".cv-year").textContent = stopDate.getFullYear() + " " + stopDate.toLocaleDateString("en", { month: 'short' })
+                        clone2.querySelector(".cv-year").textContent = stopDate.getFullYear() + " " + startDate.toLocaleDateString("en", { month: 'short' }) + "-" + stopDate.toLocaleDateString("en", { month: 'short' })
                     } else {
                         clone2.querySelector(".cv-year").textContent = startDate.getFullYear() + " - " + (stopDate.getFullYear() || "Present")
                     }
@@ -158,6 +162,9 @@
 
                     // Description
                     clone2.querySelector(".cv-description").textContent = item.description
+
+                    // Save default sorting order
+                    clone2.querySelector(".cv-project").setAttribute('projectorder', idx)
 
                     // Insert
                     parent_projects.insertBefore(clone2, base_projects);
@@ -185,12 +192,174 @@
                 .toggleClass('btn-secondary', highlight)
                 .toggleClass('btn-outline-primary', !highlight)
 
+        }
+
+        function extendSkillsUsedBy(initialArray) {
+            // Iterate just 1 level
+            if (!initialArray || initialArray.length == 0) {
+                return
+            }
+
+            var ret = []
+            oYAML.skills
+                .forEach(function (yitem, index) {
+                    var skillName = Object.keys(yitem)[0];
+                    if (initialArray.includes(skillName)) {
+                        ret.push(skillName)
+                        if (yitem[skillName] != null && 'usedby' in yitem[skillName]) {
+                            Array.prototype.push.apply(ret, yitem[skillName].usedby)
+                        }
+                    }
+
+                });
+
+            return ret
 
         }
 
-        $(document).ready(function () {
-            // console.log("ready!");
+        function getNamesfromSkills(skillsArray) {
+            // Iterate just 1 level
+            if (!skillsArray || skillsArray.length == 0) {
+                return
+            }
 
+            var ret = oYAML.projects
+                .filter((item, idx) =>
+                    item.tags
+                        .some(r =>
+                            skillsArray.indexOf(r) >= 0
+                        )
+                )
+                .sort(callbackSortProjects)
+                .map(e => e.name)
+
+            return ret
+        }
+
+        function highlightProjectCard($projectCard, ishighlight) {
+            $projectCard
+                .toggleClass('bg-primary text-white', ishighlight)
+                .find('.cv-year')
+                .toggleClass('text-muted', !ishighlight)
+                .toggleClass('text-white-75', ishighlight)
+        }
+
+        $(document).ready(function () {
+            // Define a custom jquery function to insert children elements at specific index.
+            // 
+            // $("#controller").insertAt(0, "<div>first insert</div>");
+            // $("#controller").insertAt(-1, "<div>append</div>");
+            // $("#controller").insertAt(1, "<div>insert at second position</div>");
+            jQuery.fn.insertAt = function (index, element) {
+                var lastIndex = this.children().length;
+                if (index < 0) {
+                    index = Math.max(0, lastIndex + 1 + index);
+                }
+                this.append(element);
+                if (index < lastIndex) {
+                    this.children().eq(index).before(this.children().last());
+                }
+                return element;
+            }
+
+
+
+            function consumeData() {
+                // Init Skills array
+                consumeSkills()
+
+                consumeExperience()
+
+                consumeProjects()
+
+                $(function () {
+                    // Skill click
+                    $("#parent_skill").on("change", function () {
+                        var user_selected = $('#parent_skill').children('input[type=checkbox]:checked').map(function () {
+                            return this.getAttribute('skillcontent')
+                        }).get()
+
+                        // If is empty, reset default positions
+                        if (user_selected.length == 0) {
+                            var $wrapper = $('#parent_projects');
+
+                            highlightProjectCard($wrapper
+                                .children('.cv-project, .bg-primary'), false)
+
+                            $wrapper
+                                .find('.cv-project')
+                                .sort(function (a, b) {
+                                    return +a.getAttribute('projectorder') - +b.getAttribute('projectorder');
+                                })
+                                .appendTo($wrapper);
+
+                            return
+                        }
+
+                        var targetSkills = extendSkillsUsedBy(user_selected)
+                        var firstPositions = getNamesfromSkills(targetSkills)
+
+                        // Get elements which must unhighlight
+                        firstPositions
+                            .forEach(projectName => ACTIVEPROJECTS.delete(projectName))
+
+                        // unhighlight
+                        ACTIVEPROJECTS
+                            .forEach(projectName => {
+                                var $projectDiv = $("#parent_projects")
+                                    .find(".cv-project .cv-name:contains(" + projectName + ")")
+                                    .closest('.cv-project')
+                                highlightProjectCard($projectDiv, false)
+                            })
+
+                        // Save last status
+                        ACTIVEPROJECTS = new Set(firstPositions)
+
+                        firstPositions.forEach(function (projectName, index) {
+                            var $projectDiv = $("#parent_projects")
+                                .find(".cv-project .cv-name:contains(" + projectName + ")")
+                                .closest('.cv-project')
+
+                            
+
+                            // We can't move it if it is already the first one
+                            if ($projectDiv.index() > 0) {
+                                $projectDiv.fadeOut('fast', function () {
+                                    //highlight the card
+                                    highlightProjectCard($projectDiv, true)
+                                    $("#parent_projects")
+                                        .insertAt(index, $projectDiv)
+                                        .fadeIn('slow');
+                                });
+                            } else {
+                                highlightProjectCard($projectDiv, true)
+                            }
+                            
+                        });
+                        // console.log("xd")
+                    });
+
+
+                    // Mouse over projects
+                    $(".cv-project").mouseenter(function () {
+                        // $(this).css("box-shadow", "5px 5px 5px 2px #555");
+                        $(this).toggleClass('border-secondary')
+                        FindSkills(
+                            $(this).find(".cv-name").text(),
+                            true
+                        )
+                    });
+                    $(".cv-project").mouseleave(function () {
+                        // $(this).css("box-shadow", "0px 0px 0px 0px #555");
+                        $(this).toggleClass('border-secondary')
+                        FindSkills(
+                            $(this).find(".cv-name").text(),
+                            false
+                        )
+                    });
+                });
+
+            }
 
             // ##############
             // Start here :)
@@ -205,36 +374,6 @@
                     consumeData();
                 })
             // .catch((error) => alert(error))
-
-            function consumeData() {
-                // Init Skills array
-                consumeSkills()
-
-                consumeExperience()
-
-                consumeProjects()
-
-                $(function () {
-                    $(".cv-project").mouseenter(function () {
-                        // console.log("MOUSE IN")
-                        $(this).css("box-shadow", "5px 5px 5px 2px #555");
-                        FindSkills(
-                            $(this).find(".cv-name").text(),
-                            true
-                        )
-                    });
-                    $(".cv-project").mouseleave(function () {
-                        // console.log("MOUSE OT")
-                        $(this).css("box-shadow", "0px 0px 0px 0px #555");
-                        FindSkills(
-                            $(this).find(".cv-name").text(),
-                            false
-                        )
-                    });
-                });
-
-            }
-
 
         });
 
@@ -261,14 +400,14 @@
                     <div id="parent_skill" class="row row-cols-auto btn-group" role="group">
                         <template id="template_skill">
                             <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off"
-                                aria-describedby="btniconX">
+                                skillcontent="XXX">
                             <label class="btn btn-outline-primary m-1 cv-skill" for="btncheckX"><i class=""></i>
                                 <span>XXX</span></label>
                         </template>
                     </div>
                 </div>
             </div>
-            <div class="col border">
+            <div class="col h-100 border">
                 <!-- Education & Experience -->
 
                 <h2>Education & Experience</h2>
@@ -297,25 +436,25 @@
                 <!-- Projects -->
 
                 <h2>Projects</h2>
-                <div id="parent_projects" class="container">
-                    <template id="template_projects">
-                        <div class="row my-4 border cv-project">
-                            <div class="col-auto border cv-year">
-                                2014-2018
-                            </div>
-                            <div class="col border">
-                                <div class="row border cv-name">
-                                    Erasmus Internship
+                <div class="container">
+                    <div id="parent_projects" class="row justify-content-evenly">
+                        <template id="template_projects">
+                            <div class="card col-5 my-2 border cv-project">
+                                <div class="card-body">
+                                    <h4 class="card-title cv-name">
+                                        Erasmus Internship
+                                    </h4>
+                                    <h6 class="card-subtitle mb-2 text-muted cv-year">
+                                        2014-2018
+                                    </h6>
+
+                                    <p class="card-text cv-description">
+                                        Lorem Ipsum
+                                    </p>
                                 </div>
-                                <div class="row border cv-description">
-                                    Lorem Ipsum
-                                </div>
                             </div>
-                            <!-- <div class="col-3 border cv-location">
-                                NXP Semiconductors
-                            </div> -->
-                        </div>
-                    </template>
+                        </template>
+                    </div>
                 </div>
             </div>
         </div>

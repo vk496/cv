@@ -232,13 +232,15 @@ projects:
 skills:
   - C:
       logo: devicon-c-plain
-      related:
+      usedby:
         - Flex
         - Bison
   - C++:
       logo: devicon-cplusplus-line
   - Java:
       logo: fab fa-java
+      usedby:
+        - Maven
   - Python:
       logo: fab fa-python
   - Kubernetes:
@@ -251,10 +253,12 @@ skills:
   - ONOS:
   - Bison:
   - VoIP:
-      related:
+      usedby:
         - Asterisk
   - Go:
       logo: devicon-go-plain
+      usedby:
+        - Beego
   - CSS:
       logo: fab fa-css3
   - HTML:
@@ -262,7 +266,7 @@ skills:
   - WPA:
       logo: fas fa-wifi
   - SDN:
-      related:
+      usedby:
         - ONOS
   - VLAN:
   - Linux:
@@ -270,8 +274,6 @@ skills:
   - Android:
       logo: fab fa-android
   - Maven:
-      related:
-        - Java
   - Git:
       logo: fab fa-git-alt
   - Docker:
@@ -289,16 +291,15 @@ skills:
   - OSPF:
   - IPsec:
   - Beego:
-      related:
-        - API
-        - Go
   - API:
+      usedby:
+        - Beego
   - LDAP:
   - x509v3:
   - SNMP:
   - OpenWrt:
   - Arduino:
-      related:
+      usedby:
         - Tasmota
   - Tasmota:
   - Redis:
@@ -310,11 +311,11 @@ skills:
   - AI:
   - Cisco:
   - IPv4:
-      related:
+      usedby:
         - SDN
         - Cisco
   - IPv6:
-      related:
+      usedby:
         - SDN
         - Cisco
   - P2P:
