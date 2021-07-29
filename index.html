@@ -150,12 +150,18 @@
                     stopDate = (new Date((item.stop)))
                     startDate = (new Date((item.start)))
 
+                    var yearItem = clone2.querySelector(".cv-year")
+
                     // if range is too short, just show the month
                     if (startDate.getFullYear() == stopDate.getFullYear()) {
-                        clone2.querySelector(".cv-year").textContent = stopDate.getFullYear() + " " + startDate.toLocaleDateString("en", { month: 'short' }) + "-" + stopDate.toLocaleDateString("en", { month: 'short' })
+                        yearItem.textContent = stopDate.getFullYear() + " " + startDate.toLocaleDateString("en", { month: 'short' }) + "-" + stopDate.toLocaleDateString("en", { month: 'short' })
                     } else {
-                        clone2.querySelector(".cv-year").textContent = startDate.getFullYear() + " - " + (stopDate.getFullYear() || "Present")
+                        yearItem.textContent = startDate.getFullYear() + " - " + (stopDate.getFullYear() || "Present")
+                        yearItem.setAttribute('title',
+                            startDate.toLocaleDateString("en", { month: 'short', year: 'numeric' }) + ( item.stop ? " - " + stopDate.toLocaleDateString("en", { month: 'short', year: 'numeric' }) : '')
+                        )
                     }
+
 
                     // Name
                     clone2.querySelector(".cv-name").textContent = item.name
@@ -238,6 +244,7 @@
 
         function highlightProjectCard($projectCard, ishighlight) {
             $projectCard
+                .find('.card')
                 .toggleClass('bg-primary text-white', ishighlight)
                 .find('.cv-year')
                 .toggleClass('text-muted', !ishighlight)
@@ -320,7 +327,7 @@
                                 .find(".cv-project .cv-name:contains(" + projectName + ")")
                                 .closest('.cv-project')
 
-                            
+
 
                             // We can't move it if it is already the first one
                             if ($projectDiv.index() > 0) {
@@ -334,27 +341,20 @@
                             } else {
                                 highlightProjectCard($projectDiv, true)
                             }
-                            
+
                         });
                         // console.log("xd")
                     });
 
 
                     // Mouse over projects
-                    $(".cv-project").mouseenter(function () {
-                        // $(this).css("box-shadow", "5px 5px 5px 2px #555");
-                        $(this).toggleClass('border-secondary')
+                    $(".cv-project").on('mouseenter mouseleave', function (e) {
+                        $(this)
+                            .find(".card")
+                            .toggleClass('border-secondary')
                         FindSkills(
                             $(this).find(".cv-name").text(),
-                            true
-                        )
-                    });
-                    $(".cv-project").mouseleave(function () {
-                        // $(this).css("box-shadow", "0px 0px 0px 0px #555");
-                        $(this).toggleClass('border-secondary')
-                        FindSkills(
-                            $(this).find(".cv-name").text(),
-                            false
+                            e.type == "mouseenter"
                         )
                     });
                 });
@@ -436,21 +436,24 @@
                 <!-- Projects -->
 
                 <h2>Projects</h2>
-                <div class="container">
-                    <div id="parent_projects" class="row justify-content-evenly">
+                <div class="">
+                    <div id="parent_projects" class="row row-cols-1 row-cols-md-2 gy-5">
                         <template id="template_projects">
-                            <div class="card col-5 my-2 border cv-project">
-                                <div class="card-body">
-                                    <h4 class="card-title cv-name">
-                                        Erasmus Internship
-                                    </h4>
-                                    <h6 class="card-subtitle mb-2 text-muted cv-year">
-                                        2014-2018
-                                    </h6>
+                            <div class="col cv-project">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h4 class="card-title cv-name">
+                                            Erasmus Internship
+                                        </h4>
 
-                                    <p class="card-text cv-description">
-                                        Lorem Ipsum
-                                    </p>
+                                        <p class="card-text cv-description">
+                                            Lorem Ipsum
+                                        </p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted cv-year" data-bs-toggle="tooltip">Last updated 3 mins
+                                            ago</small>
+                                    </div>
                                 </div>
                             </div>
                         </template>
