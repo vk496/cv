@@ -158,7 +158,7 @@
                     } else {
                         yearItem.textContent = startDate.getFullYear() + " - " + (stopDate.getFullYear() || "Present")
                         yearItem.setAttribute('title',
-                            startDate.toLocaleDateString("en", { month: 'short', year: 'numeric' }) + ( item.stop ? " - " + stopDate.toLocaleDateString("en", { month: 'short', year: 'numeric' }) : '')
+                            startDate.toLocaleDateString("en", { month: 'short', year: 'numeric' }) + (item.stop ? " - " + stopDate.toLocaleDateString("en", { month: 'short', year: 'numeric' }) : '')
                         )
                     }
 
@@ -450,9 +450,12 @@
                                             Lorem Ipsum
                                         </p>
                                     </div>
-                                    <div class="card-footer">
-                                        <small class="text-muted cv-year" data-bs-toggle="tooltip">Last updated 3 mins
-                                            ago</small>
+                                    <div class="card-footer d-flex justify-content-between">
+                                        <small class="text-muted cv-year" data-bs-toggle="tooltip">random
+                                            time</small>
+                                        <small class="">
+                                            <i class="fa fa-globe fa-lg"></i>
+                                        </small>
                                     </div>
                                 </div>
                             </div>
