@@ -372,6 +372,24 @@
                             e.type == "mouseenter"
                         )
                     });
+
+
+                    // Mouse over skills
+                    $(".cv-skill").on('mouseenter mouseleave', function (e) {
+                        var targetSkill = $(this).attr("skillname")
+
+                        var listPNames = oYAML.projects
+                            .filter(p => p.tags.includes(targetSkill))
+                            .map(p => p.name)
+
+                        $('div#parent_projects')
+                            .children('.cv-project')
+                            .filter((idx, htmlItem) => listPNames.includes($(htmlItem).find('.cv-name').text()))
+                            .children('.card')
+                            .toggleClass('border-primary', e.type == "mouseenter")
+
+
+                    });
                 });
 
             }
