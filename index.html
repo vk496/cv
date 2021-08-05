@@ -172,6 +172,18 @@
                     // Save default sorting order
                     clone2.querySelector(".cv-project").setAttribute('projectorder', idx)
 
+                    // If we have links to the project
+                    if (item.url) {
+                        var urldombase = clone2.querySelector(".cv-url")
+                        var baseUrlList = "<div class='list-group'>"
+                        item.url.forEach(function (urlItem, idx) {
+                            baseUrlList += "<a target='_blank' href='" + urlItem + "' class='list-group-item list-group-item-action'>" + urlItem + "</a>"
+                        })
+                        baseUrlList += "</div>"
+                        urldombase.setAttribute("data-bs-content", baseUrlList)
+                        urldombase.classList.remove("d-none")
+                    }
+
                     // Insert
                     parent_projects.insertBefore(clone2, base_projects);
                 });
@@ -361,6 +373,14 @@
 
             }
 
+            function initUrlPopover() {
+                // Init URL popover in projects
+                var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+                var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+                    return new bootstrap.Popover(popoverTriggerEl, { html: true })
+                })
+            }
+
             // ##############
             // Start here :)
             // ##############
@@ -372,6 +392,7 @@
                 .then(data => {
                     oYAML = jsyaml.load(data)
                     consumeData();
+                    initUrlPopover();
                 })
             // .catch((error) => alert(error))
 
@@ -385,7 +406,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 border">
+            <div class="col-3">
                 <div class="row mb-2">
                     <h2>Contact</h2>
                     <div id="firstname">Valentín KIVACHUK BURDÁ</div>
@@ -407,10 +428,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col h-100 border">
+            <div class="col border shadow">
                 <!-- Education & Experience -->
 
-                <h2>Education & Experience</h2>
+                <h2 class="text-center m-4">Formation</h2>
                 <div id="parent_experience" class="container">
                     <template id="template_experience">
                         <div class="row border cv-experience">
@@ -435,9 +456,9 @@
 
                 <!-- Projects -->
 
-                <h2>Projects</h2>
+                <h2 class="text-center m-4">Projects</h2>
                 <div class="">
-                    <div id="parent_projects" class="row row-cols-1 row-cols-md-2 gy-5">
+                    <div id="parent_projects" class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-6 gy-5">
                         <template id="template_projects">
                             <div class="col cv-project">
                                 <div class="card h-100">
@@ -451,11 +472,14 @@
                                         </p>
                                     </div>
                                     <div class="card-footer d-flex justify-content-between">
-                                        <small class="text-muted cv-year" data-bs-toggle="tooltip">random
-                                            time</small>
-                                        <small class="">
-                                            <i class="fa fa-globe fa-lg"></i>
-                                        </small>
+                                        <small class="text-muted cv-year" data-bs-toggle="tooltip">random</small>
+                                        <!-- <a type="button" class="btn btn-sm btn-outline-secondary cv-url" onclick=""> -->
+                                        <a tabindex="0" class="btn btn-sm btn-outline-secondary d-none cv-url"
+                                            data-bs-toggle="popover" data-bs-trigger="popover" title="External URLs"
+                                            data-bs-content="This should be initialized with JS">
+                                            <i class="fa fa-globe"></i>
+                                        </a>
+
                                     </div>
                                 </div>
                             </div>

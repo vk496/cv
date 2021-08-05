@@ -134,7 +134,8 @@ projects:
     where: um
     start: 2017-09-01
     stop: 2018-05-01
-    url: https://github.com/vk496/lego
+    url:
+      - https://github.com/vk496/lego
     description: >-
       Deployment of two macro organizations with their own
       services through Docker
