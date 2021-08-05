@@ -261,6 +261,9 @@
                 .find('.cv-year')
                 .toggleClass('text-muted', !ishighlight)
                 .toggleClass('text-white-75', ishighlight)
+                .siblings('.cv-url')
+                .toggleClass('btn-outline-secondary', !ishighlight)
+                .toggleClass('btn-outline-light', ishighlight)
         }
 
         $(document).ready(function () {
