@@ -11,6 +11,8 @@
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.12.0/devicon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icon-css@3.5.0/css/flag-icon.min.css"
+        integrity="sha256-0n6YDYIexWJmHyTKtRRHTXvoanQrXpFfpsfv0h53qvk=" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
@@ -25,6 +27,29 @@
 
         var oYAML // Where our YAML is stored
         var ACTIVEPROJECTS = new Set()
+
+        function consumeLang() {
+            let base_lang = document.getElementById('template_lang')
+            let parent_lang = document.getElementById('parent_lang');
+            oYAML.languages.forEach(function (langObj, index) {
+                //get node
+                var baseTemp = document.importNode(base_lang.content, true);
+
+                // Lang dom element
+                var item = baseTemp.querySelector('.cv-lang')
+
+                // Set name
+                item.querySelector('.cv-lang-name').textContent = langObj.name;
+
+                // Level
+                item.querySelector('.cv-lang-level').textContent = langObj.level;
+
+                // Set flag
+                item.querySelector('.cv-lang-icon').classList.add("flag-icon-" + langObj.id);
+               
+                parent_lang.insertBefore(baseTemp, base_lang);
+            });
+        }
 
         function consumeSkills() {
             let base_skill = document.getElementById('template_skill')
@@ -294,6 +319,8 @@
 
                 consumeProjects()
 
+                consumeLang()
+
                 $(function () {
                     // Skill click
                     $("#parent_skill").on("change", function () {
@@ -448,17 +475,26 @@
                         <div id="email">cv@vk496.es</div>
                     </div>
                     <div class="row">
-                        <h2>Languages</h2>
-                        <div>Spanish</div>
+                        <h4>Languages</h4>
+                        <ol id="parent_lang" class="list-group">
+                            <template id="template_lang">
+                                <li class="list-group-item d-flex align-items-center cv-lang">
+                                    <div class="flag-icon cv-lang-icon"></div>
+                                    <div class="fw-bold ms-4 me-auto cv-lang-name">Spanish</div>
+                                    <div class="me-2 cv-lang-level">Native</div>
+                                </li>
+                            </template>
+                        </ol>
                     </div>
                     <div class="row">
-                        <h2>Skills</h2>
-                        <div class="input-group mb-3">
+                        <h3>Skills</h3>
+                        <div class="input-group mb-3 d-print-none">
                             <button onclick="$('#cv-skill-input').val(null).trigger('input');"
                                 class="btn btn-outline-secondary" type="button" id="button-addon1"><i
                                     class="fa fa-sm fa-trash"></i></button>
-                            <input id="cv-skill-input" type="text" class="form-control" placeholder=""
-                                aria-label="Example text with button addon" aria-describedby="button-addon1">
+                            <input placeholder="Search" id="cv-skill-input" type="text" class="form-control"
+                                placeholder="" aria-label="Example text with button addon"
+                                aria-describedby="button-addon1">
                         </div>
                         <div id="parent_skill" class="row row-cols-auto btn-group" role="group">
                             <template id="template_skill">

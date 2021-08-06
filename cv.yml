@@ -8,14 +8,18 @@ contact:
   - link: https://github.com/vk496
     logo: ####
 languages:
-  - lang: $LANG_ESP
-    level: $LANG_LVL_NATIVE
-  - lang: Russian
-    level: $LANG_LVL_NATIVE
-  - lang: English
-    level: $LANG_LVL_ADV
-  - lang: $LANG_FR
-    level: $LANG_LVL_INTERM
+  - id: es
+    name: Spanish
+    level: Native
+  - id: gb
+    name: English
+    level: Advanced
+  - id: ru
+    name: Russian
+    level: Native
+  - id: fr
+    name: French
+    level: Working proficiency
 education_experience:
   - name: University of Murcia
     id: um
